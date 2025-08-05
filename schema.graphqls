@@ -1,0 +1,41 @@
+schema {
+	query: Query
+}
+
+type Query {
+	problemsetQuestionListV2(
+		categorySlug: String
+		skip: Int
+		limit: Int
+		filters: QuestionFilterInput
+		searchKeyword: String
+		sortBy: QuestionSortByInput
+	): ProblemsetQuestionListV2Result
+}
+
+type ProblemsetQuestionListV2Result {
+	questions: [QuestionNode!]!
+	totalLength: Int
+	hasMore: Boolean
+}
+
+type QuestionNode {
+	titleSlug: String
+	questionFrontendId: String
+	difficulty: String
+}
+
+input QuestionFilterInput {
+	filterCombineType: String
+	statusFilter: QuestionStatusFilterInput
+}
+
+input QuestionStatusFilterInput {
+	questionStatuses: [String]
+	operator: String
+}
+
+input QuestionSortByInput {
+	sortField: String
+	sortOrder: String
+}

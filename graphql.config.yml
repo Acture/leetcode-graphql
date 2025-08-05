@@ -1,0 +1,13 @@
+name: leetcode-graphql
+schemaPath: schema.graphqls  # 可为空或省略
+documents: '**/*.graphql'
+extensions:
+    endpoints:
+        leetcode:
+            url: https://leetcode.com/graphql
+            headers:
+                Content-Type: application/json
+                Referer: https://leetcode.com/
+                Cookie: ${LEETCODE_COOKIE}
+                LEETCODE_SESSION: ${LEETCODE_SESSION}
+                X-CSRFToken: ${LEETCODE_CSRF}

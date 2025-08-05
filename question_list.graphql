@@ -1,0 +1,23 @@
+query ProblemList(
+	$categorySlug: String
+	$skip: Int
+	$limit: Int
+	$filters: QuestionFilterInput
+	$searchKeyword: String
+	$sortBy: QuestionSortByInput
+) {
+	problemsetQuestionListV2(
+		categorySlug: $categorySlug
+		skip: $skip
+		limit: $limit
+		filters: $filters
+		searchKeyword: $searchKeyword
+		sortBy: $sortBy
+	) {
+		questions {
+			titleSlug
+			questionFrontendId
+			difficulty
+		}
+	}
+}

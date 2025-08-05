@@ -15,6 +15,7 @@ query ProblemList(
 		sortBy: $sortBy
 	) {
 		questions {
+			title
 			titleSlug
 			questionFrontendId
 			difficulty

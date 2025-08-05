@@ -11,6 +11,19 @@ type Query {
 		searchKeyword: String
 		sortBy: QuestionSortByInput
 	): ProblemsetQuestionListV2Result
+
+	ugcArticleSolutionArticles(
+		questionSlug: String!
+		orderBy: ArticleOrderByEnum
+		userInput: String
+		tagSlugs: [String!]
+		skip: Int
+		before: String
+		after: String
+		first: Int
+		last: Int
+		isMine: Boolean
+	): UGCArticleSolutionConnection
 }
 
 type ProblemsetQuestionListV2Result {
@@ -20,6 +33,7 @@ type ProblemsetQuestionListV2Result {
 }
 
 type QuestionNode {
+	title: String
 	titleSlug: String
 	questionFrontendId: String
 	difficulty: String
@@ -38,4 +52,112 @@ input QuestionStatusFilterInput {
 input QuestionSortByInput {
 	sortField: String
 	sortOrder: String
+}
+
+enum ArticleOrderByEnum {
+	HOT
+	NEWEST
+	OLDEST
+}
+
+type UGCArticleSolutionConnection {
+	totalNum: Int
+	pageInfo: PageInfo
+	edges: [UGCArticleSolutionEdge]
+}
+
+type PageInfo {
+	hasNextPage: Boolean
+}
+
+type UGCArticleSolutionEdge {
+	node: SolutionArticleNode
+}
+
+type SolutionArticleNode {
+	uuid: String
+	title: String
+	slug: String
+	summary: String
+	author: Author
+	articleType: ArticleTypeEnum
+	thumbnail: String
+	createdAt: String
+	updatedAt: String
+	status: ArticleStatusEnum
+	isLeetcode: Boolean
+	canSee: Boolean
+	canEdit: Boolean
+	isMyFavorite: Boolean
+	chargeType: ChargeTypeEnum
+	myReactionType: ReactionTypeEnum
+	topicId: Int
+	hitCount: Int
+	hasVideoArticle: Boolean
+	reactions: [Reaction!]
+	tags: [Tag!]
+	topic: Topic
+}
+
+type Author {
+	realName: String
+	userAvatar: String
+	userSlug: String
+	userName: String
+	nameColor: String
+	certificationLevel: CertificationLevelEnum
+	activeBadge: Badge
+}
+
+type Badge {
+	icon: String
+	displayName: String
+}
+
+type Reaction {
+	count: Int
+	reactionType: ReactionTypeEnum
+}
+
+type Tag {
+	name: String
+	slug: String
+	tagType: String
+}
+
+type Topic {
+	id: Int
+	topLevelCommentCount: Int
+}
+
+# === ENUM DEFINITIONS BASED ON ACTUAL RESPONSES ===
+
+enum ArticleTypeEnum {
+	SOLUTION
+	DISCUSSION
+}
+
+enum ArticleStatusEnum {
+	OPEN
+	CLOSED
+	DELETED
+}
+
+enum ChargeTypeEnum {
+	FREE
+	PAID
+}
+
+enum ReactionTypeEnum {
+	UPVOTE
+	THUMBS_DOWN
+	HEART
+	NONE
+}
+
+enum CertificationLevelEnum {
+	OFFICIAL
+	NORMAL
+	VERIFIED
+	NONE
 }
